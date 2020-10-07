@@ -28,7 +28,7 @@ pipeline {
             steps {
                 echo '=== Building Petclinic Docker Image ==='
                 script {
-                    docker build  - < Dockerfile
+                    docker build . 
                 }
             }
         }

@@ -22,7 +22,15 @@ pipeline {
             }
         }
         stage('Build Docker Image') {
-            sh "docker build ."
+            when {
+                branch 'master'
+            }
+            steps {
+                echo '=== Building Petclinic Docker Image ==='
+                script {
+                    app = docker.build("ibuchh/petclinic-spinnaker-jenkins")
+                }
+            }
         }
         stage('Push Docker Image') {
             when {
@@ -37,9 +45,9 @@ pipeline {
                         app.push("$SHORT_COMMIT")
                         app.push("latest")
                     }
+                }
             }
         }
-        
         stage('Remove local images') {
             steps {
                 echo '=== Delete the local docker images ==='
@@ -48,5 +56,4 @@ pipeline {
             }
         }
     }
-}
 }

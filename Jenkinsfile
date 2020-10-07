@@ -28,7 +28,7 @@ pipeline {
             steps {
                 echo '=== Building Petclinic Docker Image ==='
                 script {
-                    sh "docker build -t firstimage ."
+                    sh "docker pull ibuchh/petclinic-spinnaker-jenkins"
                 }
             }
         }
@@ -39,12 +39,8 @@ pipeline {
             steps {
                 echo '=== Pushing Petclinic Docker Image ==='
                 script {
-                    GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
-                    SHORT_COMMIT = "${GIT_COMMIT_HASH[0..7]}"
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerHubCredentials') {
-                        app.push("$SHORT_COMMIT")
-                        app.push("latest")
-                    }
+                    sh "docker tag ibuchh/petclinic-spinnaker-jenkins gcr.io/springpoc-291811/ibuchh/petclinic-spinnaker-jenkins:tag2"
+                    sh "docker push gcr.io/springpoc-291811/ibuchh/petclinic-spinnaker-jenkins:tag2"
                 }
             }
         }

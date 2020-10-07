@@ -29,6 +29,7 @@ pipeline {
                 echo '=== Building Petclinic Docker Image ==='
                 script {
                     docker build . 
+                        }
             }
         }
         stage('Push Docker Image') {

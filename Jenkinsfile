@@ -28,7 +28,6 @@ pipeline {
             steps {
                 echo '=== Building Petclinic Docker Image ==='
                 script {
-                    sh "sudo chmod 666 /var/run/docker.sock"
                     sh "docker pull ibuchh/petclinic-spinnaker-jenkins"
                 }
             }

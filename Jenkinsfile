@@ -39,9 +39,11 @@ pipeline {
             steps {
                 echo '=== Pushing Petclinic Docker Image ==='
                 script {
-                    sh "docker tag ibuchh/petclinic-spinnaker-jenkins gcr.io/springpoc-291811/ibuchh/petclinic-spinnaker-jenkins:tag2"
-                    sh "docker push gcr.io/springpoc-291811/ibuchh/petclinic-spinnaker-jenkins:tag2"
-                }
+                    withCredentials([file(credentailsId: googleProject, variable: 'google_Cred')]){
+                      sh "docker tag ibuchh/petclinic-spinnaker-jenkins gcr.io/springpoc-291811/ibuchh/petclinic-spinnaker-jenkins:tag2"
+                      sh "docker push gcr.io/springpoc-291811/ibuchh/petclinic-spinnaker-jenkins:tag2"
+                    }
+               }
             }
         }
         stage('Remove local images') {

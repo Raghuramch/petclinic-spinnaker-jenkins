@@ -22,7 +22,8 @@ pipeline {
             }
         }
         stage('Build Docker Image') {
-            docker build .
+            sh "docker build ."
+        }
         stage('Push Docker Image') {
             when {
                 branch 'master'
@@ -36,9 +37,9 @@ pipeline {
                         app.push("$SHORT_COMMIT")
                         app.push("latest")
                     }
-                }
             }
         }
+        
         stage('Remove local images') {
             steps {
                 echo '=== Delete the local docker images ==='
